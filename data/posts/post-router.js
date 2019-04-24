@@ -56,7 +56,7 @@ router.post('/', (req, res) => {
 // MUST USE AN ACTIVE USER'S ID OR IT DOESNT WORK.
 router.put('/:id', (req, res) => {
     const id = req.params.id;
-    const { text} = req.body;
+    const { text } = req.body;
     if(!text) {
         res.status(400).send({ message: "Please provide text and user_id for the post."})
     }

@@ -3,6 +3,17 @@ const express = require('express');
 const db = require('./userDb.js');
 const router = express.Router();
 
+// Custom Middleware. toUpperCase FirstLetter of Name
+// pass into the .Post and the .Put functions, if you have server.use(nameHandler), gets applied to all functions and app blows up.
+const nameHandler = (req, res, next) => {
+    const { name } = req.body;
+    if(name[0] !== name[0].toUpperCase()) {
+        res.status(400).send("Capitalize the first letter of your name.")
+    } else {
+        next();
+    }
+};
+
 // Get -> Users. **Postman Tested: working**
 router.get('/', (req, res) => {
     db
@@ -35,7 +46,7 @@ router.get('/:id', (req, res) => {
 
 
 // Create/Post => User. **Postman Tested: working**
-router.post('/', (req, res) => {
+router.post('/', nameHandler, (req, res) => {
     const { name } = req.body;
     if(!name) {
         res.status(400).json({ message: "Please provide a name."})
@@ -70,7 +81,7 @@ router.delete('/:id', (req, res) => {
 })
 
 // Update -> User. **Postman Tested: working**
-router.put('/:id', (req, res) => {
+router.put('/:id', nameHandler, (req, res) => {
     const id = req.params.id;
     const { name } = req.body;
     if(!name) {
