@@ -1,7 +1,10 @@
 // Bring in server.
 const server = require('./server.js');
 
-// Server on port 5000.
-server.listen(5000, () => {
-    console.log('\n*** Server Running on http://localhost:5000 ***\n');
-})
+// making the port dynamic for heroku hosting
+const port = process.env.PORT || 5000
+
+// server listening on dynamic port or LH:5000
+server.listen(port, () => {
+  console.log(`\n*** Server Running on http://localhost:${port} ***\n`);
+});
