@@ -10,7 +10,9 @@ server.use('/api/posts', postsRouter);
 server.use('/api/users', usersRouter);
 
 server.get('/', (req, res) => {
-    res.send('Backend Day3')
+    res.send({
+        greet: process.env.GREET
+    })
 });
 
 module.exports = server;
